@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "787629232742",
+    "project_id": "linkzdinclone",
+    "storage_bucket": "linkzdinclone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:787629232742:android:2423690a4eabfd21c893a7",
+        "android_client_info": {
+          "package_name": "com.linkzydinclone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "787629232742-bkf1vsg1jaub7tc2l0l9barhjukpjbph.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.linkzydinclone",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "787629232742-t6ul4ge0p8plv33hfvjfg8fhl2t80k6j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnixPbLbG1yRNzcrUXcQ41fz32cR4_6lk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "787629232742-t6ul4ge0p8plv33hfvjfg8fhl2t80k6j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
