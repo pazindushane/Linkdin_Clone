@@ -3,7 +3,8 @@ import { View, Text, Image, StyleSheet, SafeAreaView, ScrollView, StatusBar, Tou
 import { Searchbar, Button, Menu } from 'react-native-paper';
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import MenuDrawer from 'react-native-side-drawer';
-import UserScreen from './UserScreen'
+import UserScreen from './UserScreen';
+import Sidebar from './Sidebar';
 
 
 export default class HomeScreen extends Component {
@@ -17,6 +18,9 @@ export default class HomeScreen extends Component {
 
   toggleOpen = () => {
     this.setState({ open: !this.state.open });
+  };
+  toggleClose = () => {
+    this.setState({ open: this.state.open });
   };
 
   
@@ -32,13 +36,15 @@ export default class HomeScreen extends Component {
       <SafeAreaView style={styles.container}>
         <MenuDrawer style={styles.container2}
           open={this.state.open} 
-          drawerContent={this.drawerContent()}
+          drawerContent={<Sidebar navigation={this.props.navigation} />}
           drawerPercentage={88}
           animationTime={250}
           overlay={true}
           opacity={0.4}
+          
+          // close ={!this.state.open}
         >
-        <TouchableOpacity onPress={this.toggleOpen}  style={styles.dbtn}>
+        <TouchableOpacity  onPress={this.toggleOpen}>
         <Image
         style={styles.img1}
         source={require('../../../assests/user.png')}
@@ -51,7 +57,9 @@ export default class HomeScreen extends Component {
         onChangeText={this.onChangeSearch}
         value={this.state.searchQuery}
         />
+        <TouchableOpacity  onPress={()=>this.toggleClose}>
         <AwesomeIcon style={styles.icon1}  name="comment-dots" color={'#666666'} size={30} />
+        </TouchableOpacity>
         <ScrollView>
           <View style={styles.view1}>
           <Text style={styles.txt1}>Land your dream role</Text>
@@ -103,30 +111,6 @@ export default class HomeScreen extends Component {
       </SafeAreaView>
     );
   }
-  drawerContent = () => {
-    return (
-      <TouchableOpacity onPress={this.toggleOpen} style={styles.animatedBox}>
-       <Image
-        style={styles.img5}
-        source={require('../../../assests/user.png')}
-        />
-        <Text style={styles.txt9}>Jhon Doe</Text>
-        <AwesomeIcon style={styles.icon2}  name="times" color={'#202124'} size={30} />
-        <TouchableOpacity style={styles.btn3} onPress={this.props.navigation.navigate('UserScreen')}><Text style={styles.txt10}>View Profile</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.btn4}><Text style={styles.txt10}>Settings</Text></TouchableOpacity>
-        <AwesomeIcon style={styles.icon3}  name="stop" color={'#E7A33F'} size={30} />
-        <TouchableOpacity style={styles.btn5}><Text style={styles.txt10}>Try Premium For Free</Text></TouchableOpacity>
-        <Text style={styles.txt11}>Pages You manage</Text>
-        <Text style={styles.txt11}>Recent</Text>
-        <Text></Text>
-        <Text>#Branding</Text>
-        <Text>#Startups</Text>
-        <Text>#IJSE</Text>
-        <TouchableOpacity style={styles.btn6}><Text style={styles.txt12}>Groups</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.btn6}><Text style={styles.txt12}>Events</Text></TouchableOpacity>
-      </TouchableOpacity>
-    );
-  };
 }
 
 const styles = StyleSheet.create({

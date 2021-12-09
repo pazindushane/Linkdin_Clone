@@ -112,7 +112,7 @@ componentDidMount(){
            <AwesomeIcon style={styles.txt7} name="shield-alt" />
            <Text>  Safe and secure. only your name, email and profile image are shared</Text>
            </Text>
-           <TouchableOpacity style={styles.btn3}  onPress={this.onGoogleButtonPress}><Text style={styles.txt8}  >Continue</Text></TouchableOpacity>
+           <TouchableOpacity style={styles.btn3}  onPress={() => this.onGoogleButtonPress().then(() => console.log('Signed in with Google!')).then(()=>this.props.navigation.navigate('TabNavScreen'))}><Text style={styles.txt8}  >Continue</Text></TouchableOpacity>
         </BottomActionMenu>
         <TouchableOpacity onPress={() => this.props.navigation.navigate(LoginScreen)}><Text style={styles.txt3}>Sign In</Text></TouchableOpacity>
         

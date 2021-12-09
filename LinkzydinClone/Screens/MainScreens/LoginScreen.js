@@ -86,7 +86,7 @@ export default class LoginScreen extends Component {
             <Text style={styles.txt1}>Sign in</Text>
   </Button>
   <Text style={styles.txt6}>or</Text>
-  <TouchableOpacity style={styles.btn2}   onPress={this.onGoogleButtonPress}>
+  <TouchableOpacity style={styles.btn2}   onPress={() => onGoogleButtonPress().then(() => console.log('Signed in with Google!')).then(()=>this.props.navigation.navigate('TabNavScreen'))}>
     <Image
     style={styles.tinyLogo2}
         source={require('../../assests/google-logo.png')}

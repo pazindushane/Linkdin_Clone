@@ -21,8 +21,9 @@ export default class UserScreen extends Component {
       <SafeAreaView style={styles.container}>
         <ScrollView>
           <View style={styles.view1}>
+          <TouchableOpacity onPress={(props) => { this.props.navigation.goBack(null) }}>
         <AwesomeIcon style={styles.icon2}  name="arrow-left" color={'#666666'} size={30} />
-        
+        </TouchableOpacity>
         <Searchbar
         style={styles.searchbar}
         placeholder="Search"
