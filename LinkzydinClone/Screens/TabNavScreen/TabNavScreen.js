@@ -18,6 +18,7 @@ export default class TabNavScreen extends Component {
   }
 
   render() {
+    var {dName} = this.props.route.params
     return (
         <Tab.Navigator 
     screenOptions={{
@@ -32,7 +33,7 @@ export default class TabNavScreen extends Component {
         ]
     }}
     >
-      <Tab.Screen name="Home" component={HomeScreen} options={{
+      <Tab.Screen name="Home" component={HomeScreen} initialParams={{dName}} options={{
           tabBarLabel: 'Home',headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <AwesomeIcon  name="home" color={color} size={size} />

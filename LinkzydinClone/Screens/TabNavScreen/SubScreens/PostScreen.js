@@ -3,6 +3,9 @@ import { View, Text, Image, StyleSheet, SafeAreaView, ScrollView, StatusBar, Tou
 import { Searchbar, Button } from 'react-native-paper';
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import DropDownPicker from 'react-native-dropdown-picker';
+import ImagePicker from 'react-native-image-crop-picker';
+import { utils } from '@react-native-firebase/app';
+import storage from '@react-native-firebase/storage';
 
 export default class PostScreen extends Component {
   constructor(props) {
@@ -10,7 +13,10 @@ export default class PostScreen extends Component {
     this.state = {
       open: false,
       value: null,
-      items: [{label: 'Admin', value: 'Admin'},{label: 'User', value: 'User'}]
+      items: [{label: 'Admin', value: 'Admin'},{label: 'User', value: 'User'}],
+      imagePath: '',
+      ImageName: '',
+      ImageUrl: undefined
     };
     this.setValue = this.setValue.bind(this);
   }
@@ -33,7 +39,37 @@ export default class PostScreen extends Component {
     }));
   }
 
+  uploadImage=()=> {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true
+    }).then(image => {
+      console.log(image.path);
+      this.setState({
+        imagePath: image.path
+      })
+      this.setState({
+         ImageName : image.modificationDate
+      })
+      this.UploadImage2()
+    });
+  }
+
+  UploadImage2 = async () => {
+    const fileName = this.state.ImageName + ".jpg"
+    const reference = storage().ref(`images/${fileName}`);
+    await reference.putFile(this.state.imagePath);
+
+    const url = await storage().ref(`images/${fileName}`).getDownloadURL();
+    console.log(url);
+    this.setState({
+      ImageUrl : url
+   })
+  }
+
   render() {
+    
     const { open, value, items } = this.state;
     return (
       <SafeAreaView style={styles.container}>
@@ -73,6 +109,12 @@ export default class PostScreen extends Component {
       />
         </View>
 
+        <Image
+          // style={styles.logo}
+          source={{uri: this.state.ImageUrl}}
+          // source={{uri: this.state.ImageUrl}}
+        />
+
         <View>
         <TextInput
         style={styles.input}
@@ -81,10 +123,11 @@ export default class PostScreen extends Component {
         placeholder="What do you want to talk about?"
         keyboardType="default"
       />
+       
         </View>
 
         <View style={styles.view2}>
-          <TouchableOpacity style={styles.btn2}><AwesomeIcon style={styles.icon1} color={'#666666'} name="image"  size={25} /><Text style={styles.txt3}>Add a Photo</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.btn2} onPress={this.uploadImage}><AwesomeIcon style={styles.icon1} color={'#666666'} name="image"  size={25} /><Text style={styles.txt3}>Add a Photo</Text></TouchableOpacity>
           <TouchableOpacity style={styles.btn2}><AwesomeIcon style={styles.icon1} color={'#666666'} name="video"  size={25} /><Text style={styles.txt3}>Take A video</Text></TouchableOpacity>
           <TouchableOpacity style={styles.btn2}><AwesomeIcon style={styles.icon1} color={'#666666'} name="glass-cheers"  size={25} /><Text style={styles.txt3}>Celebrate an occasion</Text></TouchableOpacity>
           <TouchableOpacity style={styles.btn2}><AwesomeIcon style={styles.icon1} color={'#666666'} name="file-alt"  size={25} /><Text style={styles.txt3}>Add a Document</Text></TouchableOpacity>

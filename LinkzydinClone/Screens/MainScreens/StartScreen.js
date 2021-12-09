@@ -38,10 +38,11 @@ return auth().signInWithCredential(googleCredential);
 
 
 componentDidMount(){
+  console.log(auth()._user.displayName);
   if(auth().currentUser!=null){
 
     console.log("Have user");
-   this.props.navigation.navigate('TabNavScreen')
+   this.props.navigation.navigate('TabNavScreen', { dName: auth()._user.displayName})
   }else{
    console.log("Have Not user");
    

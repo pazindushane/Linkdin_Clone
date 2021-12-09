@@ -18,13 +18,14 @@ export default class Sidebar extends Component {
   };
 
   navigaetScreen = () => {
-    this.props.navigation.navigate('UserScreen');
+    this.props.navigation.navigate('UserScreen', {Named: this.props.data});
     // this.props.navigation.navigate('TabNavScreen')
     // console.log(this);
   };
 
 
   render() {
+    // var {dName} = this.props.route.params
     return (
     //   <View>
         <TouchableOpacity onPress={()=>this.toggleClose} style={styles.animatedBox}>
@@ -32,7 +33,7 @@ export default class Sidebar extends Component {
         style={styles.img5}
         source={require('../../../assests/user.png')}
         />
-        <Text style={styles.txt9}>Jhon Doe</Text>
+        <Text style={styles.txt9}>{this.props.data}</Text>
         <TouchableOpacity  onPress={()=>this.toggleClose}><AwesomeIcon style={styles.icon2}  name="times" color={'#202124'} size={30} /></TouchableOpacity>
         <TouchableOpacity style={styles.btn3}  onPress={ this.navigaetScreen }><Text style={styles.txt10}>View Profile</Text></TouchableOpacity>
         <TouchableOpacity style={styles.btn4}><Text style={styles.txt10}>Settings</Text></TouchableOpacity>

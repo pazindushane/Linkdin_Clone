@@ -7,14 +7,32 @@ import UserScreen from './UserScreen';
 import Sidebar from './Sidebar';
 
 
+
 export default class HomeScreen extends Component {
   constructor(props) {
     super(props);
+    this.scrollToTopAndRefresh = this.scrollToTopAndRefresh.bind(this);
+    this.doRefresh = this.doRefresh.bind(this);
     this.state = {
         searchQuery:'',
-        open: false
+        open: false,
+        isLoading: true,
+        refreshing: false,
     };
   }
+
+  scrollToTopAndRefresh() {
+    this.flatlistref.scrollToOffset({ y: 0, animated: true });
+    this.setState({ refreshing: true }, this.doRefresh);
+  }
+
+  doRefresh() {
+    console.log('dsds')
+    this.getData()
+    setTimeout(() => this.setState({ refreshing: false }), 1000);
+  }
+
+  flatlistref = null;
 
   toggleOpen = () => {
     this.setState({ open: !this.state.open });
@@ -30,13 +48,13 @@ export default class HomeScreen extends Component {
 }
 
   render() {
-    
+    var {dName} = this.props.route.params
 
     return (
       <SafeAreaView style={styles.container}>
         <MenuDrawer style={styles.container2}
           open={this.state.open} 
-          drawerContent={<Sidebar navigation={this.props.navigation} />}
+          drawerContent={<Sidebar navigation={this.props.navigation} data={dName}/>}
           drawerPercentage={88}
           animationTime={250}
           overlay={true}
@@ -80,7 +98,7 @@ export default class HomeScreen extends Component {
           />
 
           <View style={styles.view2}>
-          <Text style={styles.txt4}>Jhon Doe</Text>
+          <Text style={styles.txt4}>{dName} </Text>
           <Text style={styles.txt5}>63 Followers</Text>
           <Text style={styles.txt5}>1w . Edited .  <AwesomeIcon style={styles.icon1}  name="globe-americas"  size={12} /></Text>
           </View>
