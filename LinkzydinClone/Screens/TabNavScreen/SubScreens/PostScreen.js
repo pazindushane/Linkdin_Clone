@@ -45,17 +45,6 @@ export default class PostScreen extends Component {
     }));
   }
 
-  showAlert = () => {
-    this.setState({
-      showAlert: true
-    });
-  };
-
-  hideAlert = () => {
-    this.setState({
-      showAlert: false
-    });
-  };
 
   getImageFromGalery = () => {
     ImagePicker.openPicker({
@@ -94,10 +83,10 @@ export default class PostScreen extends Component {
         caption: this.state.caption,
         fileURL: url,
         creation: firestore.FieldValue.serverTimestamp(),
-      }).then(docRef => {
+      }).then((docRef) => {
         // this.props.navigation.navigate('TabNavScreen', {docId: docRef.id})
         console.log("Document written with ID: ", docRef.id);
-        console.log("You can now also access this. as expected: ", this.foo)
+        console.log("You can now also access this. as expected: ", this.imagePath)
     })
     .catch(error => console.error("Error adding document: ", error))
 
@@ -137,8 +126,6 @@ export default class PostScreen extends Component {
       this.saveRecordInFireStore(imageUrl);
       this.clear();
       this.props.navigation.navigate('Home', { screen: 'Home' });
-      
-
     }
 
 

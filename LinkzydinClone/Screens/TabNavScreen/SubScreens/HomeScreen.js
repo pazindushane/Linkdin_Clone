@@ -17,33 +17,30 @@ export default class HomeScreen extends Component {
     this.state = {
         searchQuery:'',
         open: false,
-        isLoading: true,
-        refreshing: false,
         username:auth().currentUser.displayName,
         profileImage: auth().currentUser.photoURL,
         // datas:[]
+        isLoading: true,
+        refreshing: false,
         
     };
-    // this.getPostsToFeed()
-  }
-
-  componentDidMount=()=> {
-    this.scrollToTopAndRefresh = this.scrollToTopAndRefresh.bind(this);
-    this.doRefresh = this.doRefresh.bind(this);
     this.getPostsToFeed();
+    
   }
 
-  scrollToTopAndRefresh() {
-    console.log('dsds')
-    this.flatlistref.scrollToOffset({ y: 0, animated: true });
-    this.setState({ refreshing: true }, this.doRefresh);
+  componentDidMount () {
+    
+  }
+  _onRefresh() {
+    console.log("dorefersh");
+    
+    this.setState({refreshing: true});
+    this.getPostsToFeed().then(() => {
+      this.setState({refreshing: false});
+    });
   }
 
-  doRefresh() {
-    console.log('dsds')
-    this.getPostsToFeed()
-    setTimeout(() => this.setState({ refreshing: false }), 100);
-  }
+ 
 
   
 
@@ -80,7 +77,8 @@ getPostsToFeed = async () => {
       });
       this.setState({
         isLoading: false,
-        postData:datas
+        postData:datas,
+        
       })
     });
 
@@ -119,8 +117,8 @@ flatlistref = null;
         <TouchableOpacity  onPress={()=>this.toggleClose}>
         <AwesomeIcon style={styles.icon1}  name="comment-dots" color={'#666666'} size={30} />
         </TouchableOpacity>
-        <ScrollView  nestedScrollEnabled={true}>
-          <View style={styles.view1}>
+        <View>
+          {/* <View style={styles.view1}>
           <Text style={styles.txt1}>Land your dream role</Text>
           <Image
           style={styles.img2}
@@ -132,15 +130,20 @@ flatlistref = null;
           >
             <Text style={styles.txt3}>Create Job Alert</Text>
           </Button>
-          </View>
+          </View> */}
 
           <FlatList
-          ref={(ref) => this.flatlistref = ref}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this._onRefresh.bind(this)}
+            />
+          }
            data={this.state.postData}
            renderItem={({ item }) =>
           
            
-           <View>
+          //  <View>
 
           <View style={styles.view6}>
 
@@ -176,21 +179,15 @@ flatlistref = null;
           </View>
           
           </View> 
-          </View>
+          
                 
               }
-              refreshControl={
-                <RefreshControl
-                  refreshing={this.state.refreshing}
-                  onRefresh={()=>{this.doRefresh()}}
-                />
-              }
-              keyExtractor={( item , index ) => index.toString()}
+              
                 
               />
          
 
-        </ScrollView>
+        </View>
       </SafeAreaView>
     );
   }
