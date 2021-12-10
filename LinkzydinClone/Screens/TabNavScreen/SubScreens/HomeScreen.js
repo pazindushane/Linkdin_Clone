@@ -1,38 +1,51 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, SafeAreaView, ScrollView, StatusBar, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, SafeAreaView, ScrollView, StatusBar, TouchableOpacity, FlatList, RefreshControl } from 'react-native';
 import { Searchbar, Button, Menu } from 'react-native-paper';
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import MenuDrawer from 'react-native-side-drawer';
 import UserScreen from './UserScreen';
 import Sidebar from './Sidebar';
+import auth from '@react-native-firebase/auth'
+import firestore from '@react-native-firebase/firestore';
 
 
 
 export default class HomeScreen extends Component {
   constructor(props) {
     super(props);
-    this.scrollToTopAndRefresh = this.scrollToTopAndRefresh.bind(this);
-    this.doRefresh = this.doRefresh.bind(this);
+
     this.state = {
         searchQuery:'',
         open: false,
         isLoading: true,
         refreshing: false,
+        username:auth().currentUser.displayName,
+        profileImage: auth().currentUser.photoURL,
+        // datas:[]
+        
     };
+    // this.getPostsToFeed()
+  }
+
+  componentDidMount=()=> {
+    this.scrollToTopAndRefresh = this.scrollToTopAndRefresh.bind(this);
+    this.doRefresh = this.doRefresh.bind(this);
+    this.getPostsToFeed();
   }
 
   scrollToTopAndRefresh() {
+    console.log('dsds')
     this.flatlistref.scrollToOffset({ y: 0, animated: true });
     this.setState({ refreshing: true }, this.doRefresh);
   }
 
   doRefresh() {
     console.log('dsds')
-    this.getData()
-    setTimeout(() => this.setState({ refreshing: false }), 1000);
+    this.getPostsToFeed()
+    setTimeout(() => this.setState({ refreshing: false }), 100);
   }
 
-  flatlistref = null;
+  
 
   toggleOpen = () => {
     this.setState({ open: !this.state.open });
@@ -47,14 +60,42 @@ export default class HomeScreen extends Component {
     setSearchQuery(query);
 }
 
+getListViewItem = (item) => {
+  Alert.alert(item.key);
+}
+
+getPostsToFeed = async () => {
+  const datas = [];
+  firestore()
+    .collection('Posts')
+    .get()
+    .then(querySnapshot => {
+      querySnapshot.forEach(documentSnapshot => {
+        //console.log('User ID: ', documentSnapshot.id, documentSnapshot.data());
+        console.log( documentSnapshot.data());
+        
+        const DatasObject = documentSnapshot.data();
+        datas.push({caption: DatasObject.caption, fileURL: DatasObject.fileURL, userProfilURL: DatasObject.userProfilURL, userName: DatasObject.userName});
+        console.log(datas);
+      });
+      this.setState({
+        isLoading: false,
+        postData:datas
+      })
+    });
+
+}
+
+flatlistref = null;
+
   render() {
-    var {dName} = this.props.route.params
+    
 
     return (
       <SafeAreaView style={styles.container}>
         <MenuDrawer style={styles.container2}
           open={this.state.open} 
-          drawerContent={<Sidebar navigation={this.props.navigation} data={dName}/>}
+          drawerContent={<Sidebar navigation={this.props.navigation} data={this.state.username}/>}
           drawerPercentage={88}
           animationTime={250}
           overlay={true}
@@ -65,7 +106,7 @@ export default class HomeScreen extends Component {
         <TouchableOpacity  onPress={this.toggleOpen}>
         <Image
         style={styles.img1}
-        source={require('../../../assests/user.png')}
+        source={{ uri: this.state.profileImage }}
         />
         </TouchableOpacity>
         </MenuDrawer>
@@ -78,7 +119,7 @@ export default class HomeScreen extends Component {
         <TouchableOpacity  onPress={()=>this.toggleClose}>
         <AwesomeIcon style={styles.icon1}  name="comment-dots" color={'#666666'} size={30} />
         </TouchableOpacity>
-        <ScrollView>
+        <ScrollView  nestedScrollEnabled={true}>
           <View style={styles.view1}>
           <Text style={styles.txt1}>Land your dream role</Text>
           <Image
@@ -86,30 +127,41 @@ export default class HomeScreen extends Component {
           source={require('../../../assests/banner1.png')}
           />
           <Text style={styles.txt2}>Ge4t notified when new jobs match your preferd title and location</Text>
-          <Button style={styles.btn1}   onPress={() => console.log('Pressed')}>
+          <Button style={styles.btn1}   
+          onPress={this.getPostsToFeed}
+          >
             <Text style={styles.txt3}>Create Job Alert</Text>
           </Button>
           </View>
+
+          <FlatList
+          ref={(ref) => this.flatlistref = ref}
+           data={this.state.postData}
+           renderItem={({ item }) =>
+          
+           
+           <View>
+
           <View style={styles.view6}>
 
           <Image
           style={styles.img3}
-          source={require('../../../assests/user.png')}
+          source={{ uri:item.userProfilURL}}
           />
 
           <View style={styles.view2}>
-          <Text style={styles.txt4}>{dName} </Text>
+          <Text style={styles.txt4}>{item.userName} </Text>
           <Text style={styles.txt5}>63 Followers</Text>
-          <Text style={styles.txt5}>1w . Edited .  <AwesomeIcon style={styles.icon1}  name="globe-americas"  size={12} /></Text>
+          <Text style={styles.txt5}>{item.creation} . Edited .  <AwesomeIcon style={styles.icon1}  name="globe-americas"  size={12} /></Text>
           </View>
 
           <TouchableOpacity><Text style={styles.txt6}>+  Follow</Text></TouchableOpacity>
 
-          <Text style={styles.txt7}>Hey developers, Lets talk...<Text style={styles.txt5}>see more</Text></Text>
+          <Text style={styles.txt7}>{item.caption}...<Text style={styles.txt5}>see more</Text></Text>
 
           <Image 
           style={styles.img4}
-          source={require('../../../assests/post1.jpg')}
+          source={{ uri:item.fileURL}}
           />
 
           <View style={styles.view3}><Text><AwesomeIcon style={styles.icon1} color={'#368EE9'} name="thumbs-up"  size={14} />  <AwesomeIcon style={styles.icon1} color={'#D96D49'} name="heart"  size={14} />  <AwesomeIcon style={styles.icon1} color={'#70AF50'}  name="sign-language"  size={14} />  26</Text></View>
@@ -123,7 +175,20 @@ export default class HomeScreen extends Component {
             </Text>
           </View>
           
+          </View> 
           </View>
+                
+              }
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={()=>{this.doRefresh()}}
+                />
+              }
+              keyExtractor={( item , index ) => index.toString()}
+                
+              />
+         
 
         </ScrollView>
       </SafeAreaView>
@@ -149,7 +214,8 @@ const styles = StyleSheet.create({
           marginTop:10,
           marginLeft:10,
           width:40,
-          height:40
+          height:40,
+          borderRadius:100
       },
       searchbar:{
         // position:'absolute',
@@ -211,7 +277,8 @@ const styles = StyleSheet.create({
       marginTop:10,
       marginLeft:15,
       width:48,
-      height:48
+      height:48,
+      borderRadius:100
   },
   txt6:{
     fontSize:16,

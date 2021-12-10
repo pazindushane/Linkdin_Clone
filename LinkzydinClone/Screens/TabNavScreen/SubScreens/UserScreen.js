@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, SafeAreaView, ScrollView, StatusBar, TouchableOpacity } from 'react-native';
 import { Searchbar, Button, Menu } from 'react-native-paper';
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome5';
+import auth from '@react-native-firebase/auth'
 
 export default class UserScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       searchQuery:'',
+      username:auth().currentUser.displayName,
+      profileImage: auth().currentUser.photoURL,
     };
   }
   
@@ -17,7 +20,7 @@ export default class UserScreen extends Component {
 
 
   render() {
-    var {Named} = this.props.route.params
+    
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView>
@@ -42,11 +45,11 @@ export default class UserScreen extends Component {
        
         <Image
         style={styles.img2}
-        source={require('../../../assests/user.png')}
+        source={{ uri: this.state.profileImage }}
         />
         <TouchableOpacity ><View style={styles.btn2}><AwesomeIcon style={styles.icon3}  name="plus" color={'#0A66C2'} size={22} /></View></TouchableOpacity>
        
-        <Text style={styles.txt1}>{Named} </Text>
+        <Text style={styles.txt1}>{this.state.username} </Text>
         <Text style={styles.txt2}>Software Engineer</Text>
         <Text style={styles.txt3}>Microsoft Corporation</Text>
         <Text style={styles.txt4}>Washington, United States</Text>

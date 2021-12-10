@@ -4,12 +4,15 @@ import { Searchbar, Button, Menu } from 'react-native-paper';
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import MenuDrawer from 'react-native-side-drawer';
 import UserScreen from './UserScreen';
+import auth from '@react-native-firebase/auth'
 
 export default class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        open: false
+        open: false,
+        username:auth().currentUser.displayName,
+        profileImage: auth().currentUser.photoURL,
     };
   }
 
@@ -18,7 +21,7 @@ export default class Sidebar extends Component {
   };
 
   navigaetScreen = () => {
-    this.props.navigation.navigate('UserScreen', {Named: this.props.data});
+    this.props.navigation.navigate('UserScreen');
     // this.props.navigation.navigate('TabNavScreen')
     // console.log(this);
   };
@@ -31,9 +34,9 @@ export default class Sidebar extends Component {
         <TouchableOpacity onPress={()=>this.toggleClose} style={styles.animatedBox}>
        <Image
         style={styles.img5}
-        source={require('../../../assests/user.png')}
+        source={{ uri: this.state.profileImage }}
         />
-        <Text style={styles.txt9}>{this.props.data}</Text>
+        <Text style={styles.txt9}>{this.state.username}</Text>
         <TouchableOpacity  onPress={()=>this.toggleClose}><AwesomeIcon style={styles.icon2}  name="times" color={'#202124'} size={30} /></TouchableOpacity>
         <TouchableOpacity style={styles.btn3}  onPress={ this.navigaetScreen }><Text style={styles.txt10}>View Profile</Text></TouchableOpacity>
         <TouchableOpacity style={styles.btn4}><Text style={styles.txt10}>Settings</Text></TouchableOpacity>
@@ -70,7 +73,8 @@ const styles = StyleSheet.create({
         marginTop:70,
         marginLeft:3,
         width:50,
-        height:50
+        height:50,
+        borderRadius:100
       },
       txt9:{
         fontSize:19,
