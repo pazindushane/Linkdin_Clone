@@ -14,7 +14,7 @@ import auth from '@react-native-firebase/auth'
 export default class PostScreen extends Component {
   constructor(props) {
     super(props);
-    this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
+    
     this.state = {
       open: false,
       value: null,
@@ -23,9 +23,13 @@ export default class PostScreen extends Component {
       // ImageName: '',
       fileURL: '',
       profileImage: auth().currentUser.photoURL,
+      refreshing: false,
     };
     this.setValue = this.setValue.bind(this);
   }
+
+  
+  
 
   setOpen=(open)=> {
     this.setState({
@@ -86,7 +90,9 @@ export default class PostScreen extends Component {
       }).then((docRef) => {
         // this.props.navigation.navigate('TabNavScreen', {docId: docRef.id})
         console.log("Document written with ID: ", docRef.id);
-        console.log("You can now also access this. as expected: ", this.imagePath)
+        console.log("You can now also access this. as expected: ", this.imagePath);
+        this.clear();
+        
     })
     .catch(error => console.error("Error adding document: ", error))
 
@@ -122,9 +128,10 @@ export default class PostScreen extends Component {
       console.log(imageUrl);
       this.setState = ({
         fileURL: imageUrl,
-      })
+      }) 
       this.saveRecordInFireStore(imageUrl);
-      this.clear();
+      this.clear;
+      
       this.props.navigation.navigate('Home', { screen: 'Home' });
     }
 
@@ -132,7 +139,7 @@ export default class PostScreen extends Component {
 
   }
 
-  clear = () =>{
+  clear() {
     this.setState = ({
       caption: '',
       imagePath: '',
@@ -140,16 +147,15 @@ export default class PostScreen extends Component {
     });
   }
 
-  forceUpdateHandler = ()=>{
-    this.forceUpdate();
-  }
-
+ 
   render() {
     
     const { open, value, items } = this.state;
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView nestedScrollEnabled={true}>
+        <ScrollView nestedScrollEnabled={true}
+        
+        >
 
         <View style={styles.view1}>
           <TouchableOpacity>

@@ -63,8 +63,28 @@ export default class JobsScreen extends Component {
           <Text style={styles.txt6}>DevOps Engineer</Text>
           <Text style={styles.txt7}>Microsoft Corporation</Text>
           <Text style={styles.txt8}>Washington, United States</Text>
+          <Text style={styles.txt9}>1 weeks ago  
+            <Text style={styles.txt10}>  50 aplicants  </Text>
+            <Image
+            style={styles.img4}
+            source={require('../../../assests/linkedin.png')}
+            />
+            <Text>  Easy Apply</Text>
+          </Text>
+          <AwesomeIcon style={styles.icon2}  name="bookmark" color={'#666666'} size={20} />
+          </View>
+
+          <View style={styles.view4}>
+
+          <Image
+          style={styles.img3}
+          source={require('../../../assests/google.jpg')}
+          />
+          <Text style={styles.txt6}>Software Engineer</Text>
+          <Text style={styles.txt7}>Google LLC</Text>
+          <Text style={styles.txt8}>Menlo Park, California, United States</Text>
           <Text style={styles.txt9}>3 weeks ago  
-            <Text style={styles.txt10}>  5 aplicants  </Text>
+            <Text style={styles.txt10}>  70 aplicants  </Text>
             <Image
             style={styles.img4}
             source={require('../../../assests/linkedin.png')}
@@ -161,7 +181,7 @@ const styles = StyleSheet.create({
   view3:{
     marginTop:12,
       backgroundColor:'#FFFFFF',
-      height:270
+      height:260
   },
   img3:{
     width:50,
@@ -201,5 +221,8 @@ const styles = StyleSheet.create({
   icon2:{
     marginLeft:335,
     marginTop:-80
+  },
+  view4:{
+    marginTop:60
   }
 })

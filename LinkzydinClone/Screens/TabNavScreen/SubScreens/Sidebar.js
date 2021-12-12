@@ -5,6 +5,7 @@ import AwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import MenuDrawer from 'react-native-side-drawer';
 import UserScreen from './UserScreen';
 import auth from '@react-native-firebase/auth'
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 export default class Sidebar extends Component {
   constructor(props) {
@@ -50,6 +51,7 @@ export default class Sidebar extends Component {
         <Text>#IJSE</Text>
         <TouchableOpacity style={styles.btn6}><Text style={styles.txt12}>Groups</Text></TouchableOpacity>
         <TouchableOpacity style={styles.btn6}><Text style={styles.txt12}>Events</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.btn8} onPress={()=>GoogleSignin.signOut().then(()=>this.props.navigation.navigate('StartScreen'))}><Text style={styles.txt13}>Logout</Text></TouchableOpacity>
       </TouchableOpacity>
     //   </View>
     );
@@ -118,6 +120,22 @@ const styles = StyleSheet.create({
       txt12:{
         fontSize:20,
         color:'#0A66C2',
+        // fontWeight:'bold'
+      },
+      btn8:{
+        marginTop:10,
+        left:100,
+        width:100,
+        height:40,
+        backgroundColor:'red',
+        borderRadius:15,
+      },
+      txt13:{
+        marginTop:4,
+        fontSize:20,
+        color:'white',
+        alignSelf:'center',
+        
         // fontWeight:'bold'
       },
 })

@@ -36,10 +36,66 @@ export default class NotificationScreen extends Component {
         <View style={styles.icon2}></View>
         <Image
         style={styles.img2}
-        source={require('../../../assests/user.png')}
+        source={require('../../../assests/elon.jpg')}
         />
         <View style={styles.view1}>
-        <Text style={styles.txt1}>Jhon Doe</Text> 
+        <Text style={styles.txt1}>Elon Musk</Text> 
+        <Text style={styles.txt2}>Shared a post : </Text>
+        <Text>Hi all currently we have below...</Text>
+        </View>
+        <Text style={styles.txt3}>16h</Text>
+        <AwesomeIcon style={styles.icon3}  name="ellipsis-v" color={'#666666'} size={12} />
+        </View>
+        <View style={styles.view3}>
+        <View style={styles.icon2}></View>
+        <Image
+        style={styles.img2}
+        source={require('../../../assests/billgates.jpg')}
+        />
+        <View style={styles.view1}>
+        <Text style={styles.txt1}>Bill Gates</Text> 
+        <Text style={styles.txt2}>Shared a post : </Text>
+        <Text>Hi all currently we have below...</Text>
+        </View>
+        <Text style={styles.txt3}>16h</Text>
+        <AwesomeIcon style={styles.icon3}  name="ellipsis-v" color={'#666666'} size={12} />
+        </View>
+        <View style={styles.view3}>
+        <View style={styles.icon2}></View>
+        <Image
+        style={styles.img2}
+        source={require('../../../assests/jeff.jpg')}
+        />
+        <View style={styles.view1}>
+        <Text style={styles.txt1}>Jeff Besoz</Text> 
+        <Text style={styles.txt2}>Shared a post : </Text>
+        <Text>Hi all currently we have below...</Text>
+        </View>
+        <Text style={styles.txt3}>16h</Text>
+        <AwesomeIcon style={styles.icon3}  name="ellipsis-v" color={'#666666'} size={12} />
+        </View>
+        <View style={styles.view3}>
+        <View style={styles.icon4}></View>
+        <Image
+        style={styles.img2}
+        source={require('../../../assests/tony.jpg')}
+        />
+        <View style={styles.view1}>
+        <Text style={styles.txt1}>Tony Stark</Text> 
+        <Text style={styles.txt2}>Shared a post : </Text>
+        <Text>Hi all currently we have below...</Text>
+        </View>
+        <Text style={styles.txt3}>16h</Text>
+        <AwesomeIcon style={styles.icon3}  name="ellipsis-v" color={'#666666'} size={12} />
+        </View>
+        <View style={styles.view3}>
+        <View style={styles.icon4}></View>
+        <Image
+        style={styles.img2}
+        source={require('../../../assests/stan.jpg')}
+        />
+        <View style={styles.view1}>
+        <Text style={styles.txt1}>Stan Lee</Text> 
         <Text style={styles.txt2}>Shared a post : </Text>
         <Text>Hi all currently we have below...</Text>
         </View>
@@ -85,7 +141,7 @@ const styles = StyleSheet.create({
     },
     txt2:{
       marginTop:-20,
-      marginLeft:70
+      marginLeft:78
     },
     view2:{
       // marginLeft:12,
@@ -113,6 +169,21 @@ const styles = StyleSheet.create({
       marginTop:10,
       marginLeft:23,
       width:40,
-      height:40
+      height:40,
+      borderRadius:100
   },
+  view3:{
+    // marginLeft:12,
+    marginTop:0,
+    backgroundColor:'#E8F3FF'
+  },
+  icon4:{
+    width:10,
+    height:10,
+    borderRadius:100,
+    backgroundColor:'#2ecc71',
+    top:35,
+    left:5
+  },
+  
 })

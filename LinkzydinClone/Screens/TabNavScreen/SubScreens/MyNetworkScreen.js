@@ -49,10 +49,10 @@ export default class MyNetworkScreen extends Component {
       <View style={styles.view3}>
       <Image
       style={styles.img2}
-      source={require('../../../assests/user.png')}
+      source={require('../../../assests/billgates.jpg')}
       />
-      <Text style={styles.txt3}>Jhon Doe</Text>
-      <Text style={styles.txt4}>Student at Cambridge..</Text>
+      <Text style={styles.txt3}>Bill Gates</Text>
+      <Text style={styles.txt4}>Owner at Microsoft..</Text>
       <Text style={styles.txt5}>Cambridge University of..</Text>
       <AwesomeIcon style={styles.icon3}  name="building" color={'#666666'}  />
       <TouchableOpacity style={styles.btn1}><AwesomeIcon style={styles.icon4}  name="check-circle" color={'#0A66C2'} size={38} /></TouchableOpacity>
@@ -62,11 +62,11 @@ export default class MyNetworkScreen extends Component {
       <View style={styles.view3}>
       <Image
       style={styles.img2}
-      source={require('../../../assests/user.png')}
+      source={require('../../../assests/jeff.jpg')}
       />
-      <Text style={styles.txt3}>Jhon Doe</Text>
-      <Text style={styles.txt4}>Student at Cambridge..</Text>
-      <Text style={styles.txt5}>Cambridge University of..</Text>
+      <Text style={styles.txt3}>Jeff Bezos</Text>
+      <Text style={styles.txt4}>Owner at Amazon..</Text>
+      <Text style={styles.txt5}>Harward University of..</Text>
       <AwesomeIcon style={styles.icon3}  name="building" color={'#666666'}  />
       <TouchableOpacity style={styles.btn1}><AwesomeIcon style={styles.icon4}  name="check-circle" color={'#0A66C2'} size={38} /></TouchableOpacity>
       <TouchableOpacity style={styles.btn2}><AwesomeIcon style={styles.icon5}  name="times-circle" color={'#666666'} size={38} /></TouchableOpacity>
@@ -142,7 +142,8 @@ const styles = StyleSheet.create({
       marginTop:10,
         marginLeft:10,
         width:60,
-        height:60
+        height:60,
+        borderRadius:100
     },
     txt3:{
       fontWeight:'bold',
